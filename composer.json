@@ -1,4 +1,5 @@
 {
+    "version": "2.0.0",
     "name": "detectlanguage/detectlanguage",
     "description": "Language Detection API PHP Client",
     "keywords": ["detect", "language", "api", "client", "detection"],
