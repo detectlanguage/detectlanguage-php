@@ -34,9 +34,17 @@ class DetectLanguage
   public static $apiVersion = '0.2';
 
   /**
+   * Enable secure mode (SSL).
+   *
+   * @static
+   * @var boolean
+   */
+  public static $secure;
+
+  /**
    * API Client Version.
    */
-  const VERSION = '2.0.0';
+  const VERSION = '2.0.1';
 
   /**
    * Set API key
@@ -46,6 +54,16 @@ class DetectLanguage
    */
   public static function setApiKey($apiKey) {
     self::$apiKey = $apiKey;
+  }
+
+  /**
+   * Set secure mode
+   *
+   * @static
+   * @var boolean
+   */
+  public static function setSecure($secure) {
+    self::$secure = $secure;
   }
 
   /**

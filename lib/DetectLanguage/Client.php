@@ -143,7 +143,11 @@ class Client
    * @return string
    */
   protected static function getUrl($method) {
-    return 'http://' . DetectLanguage::$host . '/' . DetectLanguage::$apiVersion . '/' . $method;
+    return self::getProtocol() . '://' . DetectLanguage::$host . '/' . DetectLanguage::$apiVersion . '/' . $method;
+  }
+
+  protected static function getProtocol() {
+    return DetectLanguage::$secure ? 'https' : 'http';
   }
 
   /**

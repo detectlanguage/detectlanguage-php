@@ -48,6 +48,12 @@ class DetectLanguageTest extends \PHPUnit_Framework_TestCase {
     $this->__request();
   } 
 
+  public function testSecureRequest() {
+    DetectLanguage::setSecure(true);
+    $this->__request();
+    DetectLanguage::setSecure(false);
+  } 
+
   public function testInvalidApiKey() {
     $this->setExpectedException('\DetectLanguage\Error');
 

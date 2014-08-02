@@ -141,6 +141,14 @@ Result is array of detections in the same order as the texts were passed.
         [status] => ACTIVE
     )
 
+### Secure mode (SSL)
+
+If you are passing sensitive information to the Detect Language API you can enable SSL.
+
+SSL usage adds data and processing overhead. Please use only if encryption is really necessary.
+
+    DetectLanguage::setSecure(true);
+
 ## License
 
 Detect Language API Client is free software, and may be redistributed under the terms specified in the MIT-LICENSE file.
