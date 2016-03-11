@@ -74,6 +74,11 @@ class DetectLanguage
    * @return array detected languages information
    */
   public static function detect($text) {
+    
+    if (is_array($text) && count($text) > 20) {
+      throw new Error('Batch processing only allows up to 20 texts.');
+    }
+    
     $result = Client::request('detect', array('q' => $text));
 
     return $result->data->detections;
