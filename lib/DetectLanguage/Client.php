@@ -46,6 +46,10 @@ class Client
 
     if (isset($response->error))
       throw new Error($response->error->message);
+      
+    // Capture InvalidArgument error response
+    if (!isset($response->data) && isset($response->code) && isset($response->message))
+      throw new Error($response->code . ': ' . $response->message);
 
     return $response;
   }
