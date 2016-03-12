@@ -43,7 +43,7 @@ class Client
         $response = json_decode($response_body);
 
         if (isset($response->error))
-            throw new DetectLanguageError($response->error->message);
+            throw new Error($response->error->message);
 
         return $response;
     }
@@ -70,7 +70,7 @@ class Client
                 return 'requestStream';
 
             default:
-                throw new DetectLanguageError("Invalid request engine: " . $request_engine);
+                throw new Error("Invalid request engine: " . $request_engine);
         }
     }
 
@@ -127,7 +127,7 @@ class Client
         $result = curl_exec($ch);
 
         if ($result === false) {
-            $e = new DetectLanguageError(curl_error($ch));
+            $e = new Error(curl_error($ch));
             curl_close($ch);
             throw $e;
         }

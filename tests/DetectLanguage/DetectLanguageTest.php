@@ -6,7 +6,7 @@ use \DetectLanguage\DetectLanguage;
 
 class DetectLanguageTest extends \PHPUnit_Framework_TestCase
 {
-    const TEST_API_KEY = '93dfb956a294140a4370a09584af2ef6';
+    const TEST_API_KEY = 'aa721178f3809810ef0737aebce60086';
 
     public function setUp()
     {
@@ -65,6 +65,15 @@ class DetectLanguageTest extends \PHPUnit_Framework_TestCase
     public function testInvalidApiKey()
     {
         $this->setExpectedException('\DetectLanguage\Error');
+
+        DetectLanguage::setApiKey('invalid');
+
+        $result = DetectLanguage::simpleDetect('Hello world');
+    }
+
+    public function testErrorBackwardsCompatibility()
+    {
+        $this->setExpectedException('\DetectLanguage\DetectLanguageError');
 
         DetectLanguage::setApiKey('invalid');
 
