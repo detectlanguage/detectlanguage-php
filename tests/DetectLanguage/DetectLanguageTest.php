@@ -144,7 +144,18 @@ class DetectLanguageTest extends \PHPUnit_Framework_TestCase
             'hello',
             'привет',
             'hello',
-            'привет'
+            'привет',
+            'hello',
+            'привет',
+            'hello',
+            'привет',
+            'hello',
+            'привет',
+            'hello',
+            'привет',
+            'hello',
+            'привет',
+            'hello',
         );
 
         $result = DetectLanguage::detect($request);

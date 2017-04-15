@@ -84,13 +84,11 @@ class Client
      */
     protected static function requestStream($url, $params)
     {
-        $postdata = http_build_query($params);
-
         $opts = array('http' =>
             array(
                 'method' => 'POST',
                 'header' => implode("\n", self::getHeaders()),
-                'content' => $postdata,
+                'content' => json_encode($params),
                 'timeout' => self::$requestTimeout,
                 'ignore_errors' => true,
             )
@@ -116,7 +114,7 @@ class Client
         $options = array(
             CURLOPT_URL => $url,
             CURLOPT_HTTPHEADER => self::getHeaders(),
-            CURLOPT_POSTFIELDS => http_build_query($params),
+            CURLOPT_POSTFIELDS => json_encode($params),
             CURLOPT_CONNECTTIMEOUT => self::$connectTimeout,
             CURLOPT_TIMEOUT => self::$requestTimeout,
             CURLOPT_USERAGENT => self::getUserAgent(),
@@ -162,7 +160,7 @@ class Client
     protected static function getHeaders()
     {
         return array(
-            "Content-Type: application/x-www-form-urlencoded",
+            "Content-Type: application/json",
             "Accept-Encoding: gzip, deflate",
             "User-Agent: " . self::getUserAgent()
         );
