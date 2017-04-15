@@ -91,7 +91,8 @@ class Client
                 'method' => 'POST',
                 'header' => implode("\n", self::getHeaders()),
                 'content' => $postdata,
-                'timeout' => self::$requestTimeout
+                'timeout' => self::$requestTimeout,
+                'ignore_errors' => true,
             )
         );
 

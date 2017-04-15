@@ -6,11 +6,9 @@ use \DetectLanguage\DetectLanguage;
 
 class DetectLanguageTest extends \PHPUnit_Framework_TestCase
 {
-    const TEST_API_KEY = 'aa721178f3809810ef0737aebce60086';
-
     public function setUp()
     {
-        DetectLanguage::$apiKey = self::TEST_API_KEY;
+        DetectLanguage::$apiKey = getenv('DETECTLANGUAGE_API_KEY');
     }
 
     public function testConstructor()
