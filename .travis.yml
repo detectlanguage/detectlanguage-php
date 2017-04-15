@@ -1,15 +1,15 @@
 language: php
 before_script:
-  - curl -s http://getcomposer.org/installer | php
-  - php composer.phar install
+- curl -s http://getcomposer.org/installer | php
+- php composer.phar install
 script: phpunit
 php:
-  - '5.3'
-  - '5.4'
-  - '5.5'
-  - '5.6'
-  - '7.0'
-  - hhvm
+- '5.3'
+- '5.4'
+- '5.5'
+- '5.6'
+- '7.0'
+- hhvm
 env:
   global:
-    secure: OEf+n4gbaDOfj7kqVjA3sjkIYtIsfEv6K2/5RejYxMoaAHEOR5r79HatWa4D2gmJxNZa+Biro6aep17opbBhMY3FAB/RK9dqW966YMpiOIgI5CF6lQeleOik61ByFYgJgp6S4pNS0wD9hOSN42sK0AX4f67m7KlsTAyFkV7ZgQo=
+  - secure: T3uybQAiwAnWLXwjT2wy4VW2a4sUilTsu9iW1wdYbijdSDmyhK7+eTFTZ5nAdQ0/CD5ojWkbcNo5SKW4cGzLtDIyt4ReyatTZMNNlHx2u+JxnE0YwDfm84e33lGors/eauzlvCjpWVbrBmBODlRPE3vh3JVmwRFJc3y9JJ88XLg=
