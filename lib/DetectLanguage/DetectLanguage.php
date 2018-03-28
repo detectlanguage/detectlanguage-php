@@ -101,6 +101,6 @@ class DetectLanguage
 
     public static function getStatus()
     {
-        return Client::request('user/status', array());
+        return Client::request('user/status');
     }
 }

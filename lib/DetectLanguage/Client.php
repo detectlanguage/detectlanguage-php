@@ -33,11 +33,10 @@ class Client
      *
      * @return array
      */
-    public static function request($method, $params)
+    public static function request($method, $params = null)
     {
         $url = self::getUrl($method);
 
-        $params['key'] = DetectLanguage::$apiKey;
         $request_method = self::getRequestMethodName();
         $response_body = self::$request_method($url, $params);
         $response = json_decode($response_body);
@@ -162,7 +161,8 @@ class Client
         return array(
             "Content-Type: application/json",
             "Accept-Encoding: gzip, deflate",
-            "User-Agent: " . self::getUserAgent()
+            "User-Agent: " . self::getUserAgent(),
+            "Authorization: Bearer " . DetectLanguage::$apiKey
         );
     }
 
