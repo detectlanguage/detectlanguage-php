@@ -1,4 +1,4 @@
-Language Detection API PHP Client 
+Language Detection API PHP Client
 ========
 
 Detects language of given text. Returns detected language codes and scores.
@@ -37,6 +37,9 @@ You can get it by signing up at http://detectlanguage.com
 
     DetectLanguage::setApiKey("YOUR API KEY");
 
+    // Enable secure mode if passing sensitive information
+    // DetectLanguage::setSecure(true);
+
 ### Language detection
 
     $results = DetectLanguage::detect("Buenos dias señor");
@@ -48,14 +51,14 @@ You can get it by signing up at http://detectlanguage.com
         [0] => stdClass Object
             (
                 [language] => es
-                [isReliable] => 
+                [isReliable] =>
                 [confidence] => 0.32710280373832
             )
 
         [1] => stdClass Object
             (
                 [language] => pt
-                [isReliable] => 
+                [isReliable] =>
                 [confidence] => 0.083565459610028
             )
 
@@ -90,14 +93,14 @@ Result is array of detections in the same order as the texts were passed.
                 [0] => stdClass Object
                     (
                         [language] => es
-                        [isReliable] => 
+                        [isReliable] =>
                         [confidence] => 0.14018691588785
                     )
 
                 [1] => stdClass Object
                     (
                         [language] => pt
-                        [isReliable] => 
+                        [isReliable] =>
                         [confidence] => 0.083565459610028
                     )
 
@@ -108,14 +111,14 @@ Result is array of detections in the same order as the texts were passed.
                 [0] => stdClass Object
                     (
                         [language] => en
-                        [isReliable] => 
+                        [isReliable] =>
                         [confidence] => 0.17017828200972
                     )
 
                 [1] => stdClass Object
                     (
                         [language] => vi
-                        [isReliable] => 
+                        [isReliable] =>
                         [confidence] => 0.13673655423883
                     )
 
@@ -140,14 +143,6 @@ Result is array of detections in the same order as the texts were passed.
         [daily_bytes_limit] => 1048576
         [status] => ACTIVE
     )
-
-### Secure mode (SSL)
-
-If you are passing sensitive information to the Detect Language API you can enable SSL.
-
-SSL usage adds data and processing overhead. Please use only if encryption is really necessary.
-
-    DetectLanguage::setSecure(true);
 
 ## License
 
