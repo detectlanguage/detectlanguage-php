@@ -44,7 +44,7 @@ class DetectLanguage
     /**
      * API Client Version.
      */
-    const VERSION = '2.1.0';
+    const VERSION = '2.2.0';
 
     /**
      * Set API key
