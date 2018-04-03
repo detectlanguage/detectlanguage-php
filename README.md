@@ -51,15 +51,8 @@ You can get it by signing up at http://detectlanguage.com
         [0] => stdClass Object
             (
                 [language] => es
-                [isReliable] =>
-                [confidence] => 0.32710280373832
-            )
-
-        [1] => stdClass Object
-            (
-                [language] => pt
-                [isReliable] =>
-                [confidence] => 0.083565459610028
+                [isReliable] => 1
+                [confidence] => 10.24
             )
 
     )
@@ -93,15 +86,8 @@ Result is array of detections in the same order as the texts were passed.
                 [0] => stdClass Object
                     (
                         [language] => es
-                        [isReliable] =>
-                        [confidence] => 0.14018691588785
-                    )
-
-                [1] => stdClass Object
-                    (
-                        [language] => pt
-                        [isReliable] =>
-                        [confidence] => 0.083565459610028
+                        [isReliable] => 1
+                        [confidence] => 10.24
                     )
 
             )
@@ -111,15 +97,8 @@ Result is array of detections in the same order as the texts were passed.
                 [0] => stdClass Object
                     (
                         [language] => en
-                        [isReliable] =>
-                        [confidence] => 0.17017828200972
-                    )
-
-                [1] => stdClass Object
-                    (
-                        [language] => vi
-                        [isReliable] =>
-                        [confidence] => 0.13673655423883
+                        [isReliable] => 1
+                        [confidence] => 11.94
                     )
 
             )
