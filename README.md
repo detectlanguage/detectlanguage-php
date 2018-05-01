@@ -1,9 +1,11 @@
 Language Detection API PHP Client
 ========
 
+[![Packagist](https://img.shields.io/packagist/v/detectlanguage/detectlanguage.svg)](https://packagist.org/packages/detectlanguage/detectlanguage)
+[![Build Status](https://secure.travis-ci.org/detectlanguage/detectlanguage-php.svg)](http://travis-ci.org/detectlanguage/detectlanguage-php)
+
 Detects language of given text. Returns detected language codes and scores.
 
-[![Build Status](https://secure.travis-ci.org/detectlanguage/detectlanguage-php.png)](http://travis-ci.org/detectlanguage/detectlanguage-php)
 
 ## Installation
 
