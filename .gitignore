@@ -6,7 +6,6 @@ Icon
 .Spotlight-V100
 .Trashes
 *.sublime-*
-easypost-php
 vendor
 composer.lock
 bin
