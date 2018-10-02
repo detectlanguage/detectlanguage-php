@@ -9,6 +9,7 @@ class DetectLanguageTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         DetectLanguage::$apiKey = getenv('DETECTLANGUAGE_API_KEY');
+        DetectLanguage::$apiVersion = '0.2';
     }
 
     public function testConstructor()
@@ -76,6 +77,14 @@ class DetectLanguageTest extends \PHPUnit_Framework_TestCase
         DetectLanguage::setApiKey('invalid');
 
         $result = DetectLanguage::simpleDetect('Hello world');
+    }
+
+    public function testInvalidResponse()
+    {
+        $this->setExpectedException('\DetectLanguage\Error');
+
+        DetectLanguage::$apiVersion = '0.0';
+        DetectLanguage::simpleDetect('Hello world');
     }
 
     public function testBatchDetectionWithCurl()

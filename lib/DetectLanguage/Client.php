@@ -31,7 +31,7 @@ class Client
      * @param string $method Method name
      * @param array $params The parameters to use for the POST body
      *
-     * @return array
+     * @return object
      */
     public static function request($method, $params = null)
     {
@@ -40,6 +40,9 @@ class Client
         $request_method = self::getRequestMethodName();
         $response_body = self::$request_method($url, $params);
         $response = json_decode($response_body);
+
+        if (!is_object($response))
+            throw new Error("Invalid server response: $response_body");
 
         if (isset($response->error))
             throw new Error($response->error->message);
