@@ -1,10 +1,10 @@
-Language Detection API PHP Client
+Detect Language API PHP Client
 ========
 
 [![PHP version](https://badge.fury.io/ph/detectlanguage%2Fdetectlanguage.svg)](https://badge.fury.io/ph/detectlanguage%2Fdetectlanguage)
 [![Build Status](https://secure.travis-ci.org/detectlanguage/detectlanguage-php.svg)](http://travis-ci.org/detectlanguage/detectlanguage-php)
 
-Detects language of given text. Returns detected language codes and scores.
+Detects language of the given text. Returns detected language codes and scores.
 
 
 ## Installation
