@@ -7,8 +7,8 @@ jobs:
       matrix:
         php-version:
           - '5.6'
-          - '7.0'
-          - '7.2'
+          # - '7.0'
+          # - '7.2'
           - '7.3'
     name: PHP ${{ matrix.php-version }} sample
     steps:
@@ -16,7 +16,10 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-          tools: phpunit
+          # tools: phpunit
+      - run: |
+        curl -s http://getcomposer.org/installer | php
+        php composer.phar install
       - env:
           DETECTLANGUAGE_API_KEY: ${{ secrets.DETECTLANGUAGE_API_KEY }}
         run: phpunit
