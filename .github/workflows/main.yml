@@ -15,7 +15,6 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-          # tools: phpunit
       - run: |
           curl -s http://getcomposer.org/installer | php
           php composer.phar install
