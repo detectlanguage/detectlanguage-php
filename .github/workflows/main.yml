@@ -22,4 +22,4 @@ jobs:
           php composer.phar install
       - env:
           DETECTLANGUAGE_API_KEY: ${{ secrets.DETECTLANGUAGE_API_KEY }}
-        run: phpunit
+        run: bin/phpunit
