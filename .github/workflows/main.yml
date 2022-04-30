@@ -18,8 +18,8 @@ jobs:
           php-version: ${{ matrix.php-version }}
           # tools: phpunit
       - run: |
-        curl -s http://getcomposer.org/installer | php
-        php composer.phar install
+          curl -s http://getcomposer.org/installer | php
+          php composer.phar install
       - env:
           DETECTLANGUAGE_API_KEY: ${{ secrets.DETECTLANGUAGE_API_KEY }}
         run: phpunit
