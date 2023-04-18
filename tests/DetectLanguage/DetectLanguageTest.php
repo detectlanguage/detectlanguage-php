@@ -7,8 +7,10 @@ use \Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 class DetectLanguageTest extends TestCase
 {
-    public function setUp()
+    public function set_up()
     {
+        parent::set_up();
+
         DetectLanguage::$apiKey = getenv('DETECTLANGUAGE_API_KEY');
         DetectLanguage::$apiVersion = '0.2';
     }
