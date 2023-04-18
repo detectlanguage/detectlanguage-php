@@ -16,9 +16,7 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-      - run: |
-          curl -s http://getcomposer.org/installer | php
-          php composer.phar install
+          tools: phpunit
       - env:
           DETECTLANGUAGE_API_KEY: ${{ secrets.DETECTLANGUAGE_API_KEY }}
-        run: bin/phpunit
+        run: phpunit
