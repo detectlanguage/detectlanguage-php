@@ -12,7 +12,7 @@ jobs:
         phpunit-version: ['5']
         include:
           - php-version: '8.2'
-            phpunit-version: '9'
+            phpunit-version: '8'
     name: PHP ${{ matrix.php-version }} sample
     steps:
       - uses: actions/checkout@v3
