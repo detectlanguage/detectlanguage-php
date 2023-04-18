@@ -9,15 +9,15 @@ jobs:
           - '5.6'
           - '7.0'
           - '7.4'
+          - '8.2'
     name: PHP ${{ matrix.php-version }} sample
     steps:
       - uses: actions/checkout@v3
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-      - run: |
-          curl -s http://getcomposer.org/installer | php
-          php composer.phar install
+          tools: composer
+      - run: composer install
       - env:
           DETECTLANGUAGE_API_KEY: ${{ secrets.DETECTLANGUAGE_API_KEY }}
         run: bin/phpunit

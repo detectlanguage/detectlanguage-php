@@ -3,11 +3,14 @@
 namespace DetectLanguage\Test;
 
 use \DetectLanguage\DetectLanguage;
+use \Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-class DetectLanguageTest extends \PHPUnit_Framework_TestCase
+class DetectLanguageTest extends TestCase
 {
-    public function setUp()
+    public function set_up()
     {
+        parent::set_up();
+
         DetectLanguage::$apiKey = getenv('DETECTLANGUAGE_API_KEY');
         DetectLanguage::$apiVersion = '0.2';
     }
@@ -63,7 +66,7 @@ class DetectLanguageTest extends \PHPUnit_Framework_TestCase
 
     public function testInvalidApiKey()
     {
-        $this->setExpectedException('\DetectLanguage\Error');
+        $this->expectException('\DetectLanguage\Error');
 
         DetectLanguage::setApiKey('invalid');
 
@@ -72,7 +75,7 @@ class DetectLanguageTest extends \PHPUnit_Framework_TestCase
 
     public function testErrorBackwardsCompatibility()
     {
-        $this->setExpectedException('\DetectLanguage\DetectLanguageError');
+        $this->expectException('\DetectLanguage\DetectLanguageError');
 
         DetectLanguage::setApiKey('invalid');
 
@@ -81,7 +84,7 @@ class DetectLanguageTest extends \PHPUnit_Framework_TestCase
 
     public function testInvalidResponse()
     {
-        $this->setExpectedException('\DetectLanguage\Error');
+        $this->expectException('\DetectLanguage\Error');
 
         DetectLanguage::$apiVersion = '0.0';
         DetectLanguage::simpleDetect('Hello world');
