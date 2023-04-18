@@ -149,6 +149,11 @@ class Client
         return self::getProtocol() . '://' . DetectLanguage::$host . '/' . DetectLanguage::$apiVersion . '/' . $method;
     }
 
+    /**
+     * Get protocol for request.
+     *
+     * @return string 'https' or 'http'
+     */
     protected static function getProtocol()
     {
         return DetectLanguage::$secure ? 'https' : 'http';
@@ -157,7 +162,7 @@ class Client
     /**
      * Build request headers.
      *
-     * @return string
+     * @return array
      */
     protected static function getHeaders()
     {
@@ -169,6 +174,11 @@ class Client
         );
     }
 
+    /**
+     * Get User-Agent for the request.
+     *
+     * @return string
+     */
     protected static function getUserAgent()
     {
         return 'detectlanguage-php-' . DetectLanguage::VERSION;
