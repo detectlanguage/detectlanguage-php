@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<phpunit backupGlobals="false" bootstrap="vendor/autoload.php" colors="true">
+<phpunit backupGlobals="false" bootstrap="lib/detectlanguage.php" colors="true">
     <testsuites>
         <testsuite name="DetectLanguage Test Suite">
             <directory suffix="Test.php">./tests/DetectLanguage/</directory>
