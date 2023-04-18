@@ -63,7 +63,7 @@ class DetectLanguageTest extends \PHPUnit\Framework\TestCase
 
     public function testInvalidApiKey()
     {
-        $this->setExpectedException('\DetectLanguage\Error');
+        $this->expectException('\DetectLanguage\Error');
 
         DetectLanguage::setApiKey('invalid');
 
@@ -72,7 +72,7 @@ class DetectLanguageTest extends \PHPUnit\Framework\TestCase
 
     public function testErrorBackwardsCompatibility()
     {
-        $this->setExpectedException('\DetectLanguage\DetectLanguageError');
+        $this->expectException('\DetectLanguage\DetectLanguageError');
 
         DetectLanguage::setApiKey('invalid');
 
@@ -81,7 +81,7 @@ class DetectLanguageTest extends \PHPUnit\Framework\TestCase
 
     public function testInvalidResponse()
     {
-        $this->setExpectedException('\DetectLanguage\Error');
+        $this->expectException('\DetectLanguage\Error');
 
         DetectLanguage::$apiVersion = '0.0';
         DetectLanguage::simpleDetect('Hello world');
