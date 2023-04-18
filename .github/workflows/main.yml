@@ -10,13 +10,14 @@ jobs:
           - '7.0'
           - '7.4'
           - '8.2'
+        phpunit-version: ['latest']
     name: PHP ${{ matrix.php-version }} sample
     steps:
       - uses: actions/checkout@v3
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-          tools: phpunit
+          tools: phpunit:${{ matrix.phpunit-version }}
       - env:
           DETECTLANGUAGE_API_KEY: ${{ secrets.DETECTLANGUAGE_API_KEY }}
         run: phpunit
