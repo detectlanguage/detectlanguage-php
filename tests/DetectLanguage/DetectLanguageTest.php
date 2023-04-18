@@ -3,8 +3,9 @@
 namespace DetectLanguage\Test;
 
 use \DetectLanguage\DetectLanguage;
+use \Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-class DetectLanguageTest extends Yoast\PHPUnitPolyfills\TestCases\TestCase
+class DetectLanguageTest extends TestCase
 {
     public function setUp()
     {
