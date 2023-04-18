@@ -50,7 +50,7 @@ class DetectLanguage
      * Set API key
      *
      * @static
-     * @var string
+     * @param string $apiKey
      */
     public static function setApiKey($apiKey)
     {
@@ -61,7 +61,7 @@ class DetectLanguage
      * Set secure mode
      *
      * @static
-     * @var boolean
+     * @param boolean $secure
      */
     public static function setSecure($secure)
     {
@@ -72,7 +72,7 @@ class DetectLanguage
      * Detect text language.
      *
      * @static
-     * @param string @text The text for language detection
+     * @param string $text The text for language detection
      * @return array detected languages information
      */
     public static function detect($text)
@@ -86,8 +86,8 @@ class DetectLanguage
      * Simple detection. If you need just the language code.
      *
      * @static
-     * @param string @text The text for language detection
-     * @return string detected language code
+     * @param string $text The text for language detection
+     * @return string|null detected language code
      */
     public static function simpleDetect($text)
     {
