@@ -6,7 +6,7 @@ use \DetectLanguage\DetectLanguage;
 
 class DetectLanguageTest extends \PHPUnit\Framework\TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         DetectLanguage::$apiKey = getenv('DETECTLANGUAGE_API_KEY');
         DetectLanguage::$apiVersion = '0.2';
