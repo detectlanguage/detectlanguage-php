@@ -29,16 +29,21 @@ class Client
      * Perform a request
      *
      * @param string $method Method name
-     * @param array $params The parameters to use for the POST body
+     * @param array $payload Request payload
      *
      * @return object
      */
-    public static function request($method, $path, $params = null)
+    public static function request($method, $path, $payload = null)
     {
         $url = self::getUrl($path);
 
+        if ($payload !== null)
+            $body = json_encode($payload);
+        else
+            $body = null;
+
         $engine_method = self::getEngineMethodName();
-        $response_body = self::$engine_method($method,$url, $params);
+        $response_body = self::$engine_method($method,$url, $body);
         $response = json_decode($response_body);
 
         if (!is_object($response) && !is_array($response))
@@ -80,21 +85,24 @@ class Client
      * Perform request using native PHP streams
      *
      * @param string $url Request URL
-     * @param array $params The parameters to use for the POST body
+     * @param string $body Request body
      *
      * @return string Response body
      */
-    protected static function requestStream($method, $url, $params)
+    protected static function requestStream($method, $url, $body)
     {
         $opts = array('http' =>
             array(
                 'method' => $method,
                 'header' => implode("\n", self::getHeaders()),
-                'content' => json_encode($params),
                 'timeout' => self::$requestTimeout,
                 'ignore_errors' => true,
             )
         );
+
+        if ($body !== null) {
+            $opts['http']['content'] = $body;
+        }
 
         $context = stream_context_create($opts);
 
@@ -105,11 +113,11 @@ class Client
      * Perform request using CURL extension.
      *
      * @param string $url Request URL
-     * @param array $params The parameters to use for the POST body
+     * @param string $body Request body
      *
      * @return string Response body
      */
-    protected static function requestCurl($method, $url, $params)
+    protected static function requestCurl($method, $url, $body)
     {
         $ch = curl_init();
 
@@ -117,12 +125,15 @@ class Client
             CURLOPT_CUSTOMREQUEST => $method,
             CURLOPT_URL => $url,
             CURLOPT_HTTPHEADER => self::getHeaders(),
-            CURLOPT_POSTFIELDS => json_encode($params),
             CURLOPT_CONNECTTIMEOUT => self::$connectTimeout,
             CURLOPT_TIMEOUT => self::$requestTimeout,
             CURLOPT_USERAGENT => self::getUserAgent(),
             CURLOPT_RETURNTRANSFER => true
         );
+
+        if ($body !== null) {
+            $options[CURLOPT_POSTFIELDS] = $body;
+        }
 
         curl_setopt_array($ch, $options);
 
