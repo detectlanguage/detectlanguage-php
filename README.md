@@ -28,6 +28,10 @@ Create or add the following to composer.json in your project root:
 }
 ```
 
+## Upgrading
+
+When upgrading please check [changelog](CHANGELOG.md) for breaking changes.
+
 ## Usage
 
 ### Configuration

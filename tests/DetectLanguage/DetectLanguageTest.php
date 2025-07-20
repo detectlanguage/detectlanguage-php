@@ -23,7 +23,7 @@ class DetectLanguageTest extends TestCase
             'Expect the API key to be set.');
     }
 
-    public function testDetection()
+    public function testDetect()
     {
         $result = DetectLanguage::detect('Hello world');
 
@@ -34,6 +34,12 @@ class DetectLanguageTest extends TestCase
 
         $this->assertEquals('lt', $result[0]->language,
             'To detect Lithuanian language.');
+    }
+
+    public function testDetectWithArray()
+    {
+        $this->expectException('\DetectLanguage\Error');
+        $result = DetectLanguage::detect(array('Hello world'));
     }
 
     public function testDetectCode()

@@ -58,6 +58,10 @@ class DetectLanguage
      */
     public static function detect($text)
     {
+        if (is_array($text)) {
+            throw new Error('detect method does not accept arrays, use detectBatch instead');
+        }
+
         return Client::request('POST', 'detect', array('q' => $text));
     }
 
