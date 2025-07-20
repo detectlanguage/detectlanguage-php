@@ -45,7 +45,7 @@ use \DetectLanguage\DetectLanguage;
 DetectLanguage::setApiKey("YOUR API KEY");
 ```
 
-### Language detection
+### Detect language
 
 ```php
 $results = DetectLanguage::detect("Dolce far niente");
@@ -65,9 +65,9 @@ Array
 )
 ```
 
-### Simple language detection
+### Detect single code
 
-If you need just a language code you can use `simpleDetect`. It returns just the language code.
+If you need just a language code you can use `detectCode`. It returns just the language code.
 
 ```php
 $languageCode = DetectLanguage::detectCode("Dolce far niente");
@@ -83,7 +83,7 @@ $languageCode = DetectLanguage::detectCode("Dolce far niente");
 
 It is possible to detect language of several texts with one request.
 This method is faster than doing one request per text.
-To use batch detection just pass array of texts to `detect` method.
+To use batch detection just pass array of texts to `detectBatch` method.
 
 ```php
 $results = DetectLanguage::detectBatch(array("Dolce far niente", "Hello world"));
@@ -141,7 +141,7 @@ stdClass Object
 )
 ```
 
-### Get supported languages
+### Get list of supported languages
 
 ```php
 $results = DetectLanguage::getLanguages();
