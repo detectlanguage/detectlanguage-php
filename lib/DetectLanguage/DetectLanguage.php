@@ -31,20 +31,12 @@ class DetectLanguage
      * @static
      * @var string
      */
-    public static $apiVersion = '0.2';
-
-    /**
-     * Enable secure mode (SSL).
-     *
-     * @static
-     * @var boolean
-     */
-    public static $secure;
+    public static $apiVersion = 'v3';
 
     /**
      * API Client Version.
      */
-    const VERSION = '2.2.1';
+    const VERSION = '3.0.0';
 
     /**
      * Set API key
@@ -58,17 +50,6 @@ class DetectLanguage
     }
 
     /**
-     * Set secure mode
-     *
-     * @static
-     * @param boolean $secure
-     */
-    public static function setSecure($secure)
-    {
-        self::$secure = $secure;
-    }
-
-    /**
      * Detect text language.
      *
      * @static
@@ -77,9 +58,7 @@ class DetectLanguage
      */
     public static function detect($text)
     {
-        $result = Client::request('detect', array('q' => $text));
-
-        return $result->data->detections;
+        return Client::request('POST', 'detect', array('q' => $text));
     }
 
     /**
@@ -89,7 +68,7 @@ class DetectLanguage
      * @param string $text The text for language detection
      * @return string|null detected language code
      */
-    public static function simpleDetect($text)
+    public static function detectCode($text)
     {
         $detections = self::detect($text);
 
@@ -99,8 +78,37 @@ class DetectLanguage
             return null;
     }
 
+    /**
+     * Detect text language in batch.
+     *
+     * @static
+     * @param array $texts The texts for language detection
+     * @return array detected languages information
+     */
+    public static function detectBatch($texts)
+    {
+        return Client::request('POST', 'detect-batch', array('q' => $texts));
+    }
+
+    /**
+     * Get account status.
+     *
+     * @static
+     * @return array account status information
+     */
     public static function getStatus()
     {
-        return Client::request('user/status');
+        return Client::request('GET', 'account/status');
+    }
+
+    /**
+     * Get supported languages.
+     *
+     * @static
+     * @return array languages information
+     */
+    public static function getLanguages()
+    {
+        return Client::request('GET', 'languages');
     }
 }

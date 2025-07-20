@@ -33,15 +33,15 @@ class Client
      *
      * @return object
      */
-    public static function request($method, $params = null)
+    public static function request($method, $path, $params = null)
     {
-        $url = self::getUrl($method);
+        $url = self::getUrl($path);
 
-        $request_method = self::getRequestMethodName();
-        $response_body = self::$request_method($url, $params);
+        $engine_method = self::getEngineMethodName();
+        $response_body = self::$engine_method($method,$url, $params);
         $response = json_decode($response_body);
 
-        if (!is_object($response))
+        if (!is_object($response) && !is_array($response))
             throw new Error("Invalid server response: $response_body");
 
         if (isset($response->error))
@@ -55,7 +55,7 @@ class Client
      *
      * @return string
      */
-    protected static function getRequestMethodName()
+    protected static function getEngineMethodName()
     {
         $request_engine = self::$requestEngine;
 
@@ -84,11 +84,11 @@ class Client
      *
      * @return string Response body
      */
-    protected static function requestStream($url, $params)
+    protected static function requestStream($method, $url, $params)
     {
         $opts = array('http' =>
             array(
-                'method' => 'POST',
+                'method' => $method,
                 'header' => implode("\n", self::getHeaders()),
                 'content' => json_encode($params),
                 'timeout' => self::$requestTimeout,
@@ -109,11 +109,12 @@ class Client
      *
      * @return string Response body
      */
-    protected static function requestCurl($url, $params)
+    protected static function requestCurl($method, $url, $params)
     {
         $ch = curl_init();
 
         $options = array(
+            CURLOPT_CUSTOMREQUEST => $method,
             CURLOPT_URL => $url,
             CURLOPT_HTTPHEADER => self::getHeaders(),
             CURLOPT_POSTFIELDS => json_encode($params),
@@ -146,17 +147,7 @@ class Client
      */
     protected static function getUrl($method)
     {
-        return self::getProtocol() . '://' . DetectLanguage::$host . '/' . DetectLanguage::$apiVersion . '/' . $method;
-    }
-
-    /**
-     * Get protocol for request.
-     *
-     * @return string 'https' or 'http'
-     */
-    protected static function getProtocol()
-    {
-        return DetectLanguage::$secure ? 'https' : 'http';
+        return 'https://' . DetectLanguage::$host . '/' . DetectLanguage::$apiVersion . '/' . $method;
     }
 
     /**
