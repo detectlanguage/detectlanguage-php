@@ -59,7 +59,8 @@ class DetectLanguage
     public static function detect($text)
     {
         if (is_array($text)) {
-            throw new Error('detect method does not accept arrays, use detectBatch instead');
+            trigger_error('detect method does not accept arrays, use detectBatch instead', E_USER_DEPRECATED);
+            return self::detectBatch($text);
         }
 
         return Client::request('POST', 'detect', array('q' => $text));
@@ -114,5 +115,18 @@ class DetectLanguage
     public static function getLanguages()
     {
         return Client::request('GET', 'languages');
+    }
+
+    // DEPRECATED METHODS
+
+    /**
+     * @deprecated use self::detectCode instead
+     * @param string $text The text for language detection
+     * @return string|null detected language code
+     */
+    public static function simpleDetect($text)
+    {
+        trigger_error('simpleDetect method is deprecated, use detectCode instead', E_USER_DEPRECATED);
+        return self::detectCode($text);
     }
 }

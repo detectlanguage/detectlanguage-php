@@ -38,14 +38,23 @@ class DetectLanguageTest extends TestCase
 
     public function testDetectWithArray()
     {
-        $this->expectException('\DetectLanguage\Error');
         $result = DetectLanguage::detect(array('Hello world'));
+
+        $this->assertEquals('en', $result[0][0]->language,
+            'To detect English language.');
     }
 
     public function testDetectCode()
     {
         $result = DetectLanguage::detectCode('Hello world');
 
+        $this->assertEquals('en', $result,
+            'To detect English language.');
+    }
+
+    public function testSimpleDetect()
+    {
+        $result = DetectLanguage::simpleDetect('Hello world');
         $this->assertEquals('en', $result,
             'To detect English language.');
     }

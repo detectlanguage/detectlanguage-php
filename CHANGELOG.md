@@ -13,7 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Switched to v3 API which uses updated language detection model
-- ⚠️ `simpleDetect` method renamed to `detectCode`
 - ⚠️ `detect` method result fields are `language` and `score`
-- ⚠️ `detect` method no longer accept arrays - use `detectBatch` instead
-- HTTPS is used by default. Removed secure mode configuration.
+- ⚠️ `simpleDetect` deprecated, use `detectCode` instead
+- ⚠️ `detect` for batch detection is deprecated, use `detectBatch` instead
+
+### Removed
+- Secure mode configuration. HTTPS is always used.
