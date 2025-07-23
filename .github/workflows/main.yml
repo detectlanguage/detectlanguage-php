@@ -22,4 +22,4 @@ jobs:
       - run: composer install
       - env:
           DETECTLANGUAGE_API_KEY: ${{ secrets.DETECTLANGUAGE_API_KEY }}
-        run: composer test
+        run: composer test-silent
