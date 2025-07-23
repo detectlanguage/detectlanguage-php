@@ -2,3 +2,8 @@
 
 [env]
 _.file = ".env.local"
+
+[tasks]
+test = "composer test"
+test-silent = "composer test-silent"
+
