@@ -28,10 +28,12 @@ class Client
     /**
      * Perform a request
      *
-     * @param string $method Method name
-     * @param array $payload Request payload
+     * @param string $method HTTP method name (GET, POST, etc.)
+     * @param string $path API endpoint path
+     * @param array|null $payload Request payload data
      *
-     * @return object
+     * @return array Response data
+     * @throws \DetectLanguage\Error When API request fails, invalid response received, or authentication fails
      */
     public static function request($method, $path, $payload = null)
     {
@@ -55,11 +57,6 @@ class Client
         return $response;
     }
 
-    /**
-     * Get request method name.
-     *
-     * @return string
-     */
     protected static function getEngineMethodName()
     {
         $request_engine = self::$requestEngine;
@@ -84,8 +81,9 @@ class Client
     /**
      * Perform request using native PHP streams
      *
+     * @param string $method HTTP method name
      * @param string $url Request URL
-     * @param string $body Request body
+     * @param string|null $body Request body
      *
      * @return string Response body
      */
@@ -112,10 +110,12 @@ class Client
     /**
      * Perform request using CURL extension.
      *
+     * @param string $method HTTP method name
      * @param string $url Request URL
-     * @param string $body Request body
+     * @param string|null $body Request body
      *
      * @return string Response body
+     * @throws \DetectLanguage\Error When CURL request fails, times out, or connection fails
      */
     protected static function requestCurl($method, $url, $body)
     {
@@ -154,7 +154,7 @@ class Client
      * Build URL for given method
      *
      * @param string $method Method name
-     * @return string
+     * @return string Complete API URL
      */
     protected static function getUrl($method)
     {
@@ -164,7 +164,7 @@ class Client
     /**
      * Build request headers.
      *
-     * @return array
+     * @return array Array of HTTP headers
      */
     protected static function getHeaders()
     {
@@ -179,7 +179,7 @@ class Client
     /**
      * Get User-Agent for the request.
      *
-     * @return string
+     * @return string User-Agent string
      */
     protected static function getUserAgent()
     {

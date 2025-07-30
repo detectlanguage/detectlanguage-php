@@ -42,7 +42,8 @@ class DetectLanguage
      * Set API key
      *
      * @static
-     * @param string $apiKey
+     * @param string $apiKey The API key for authentication
+     * @return void
      */
     public static function setApiKey($apiKey)
     {
@@ -54,7 +55,8 @@ class DetectLanguage
      *
      * @static
      * @param string $text The text for language detection
-     * @return array detected languages information
+     * @return array Detected languages information
+     * @throws \DetectLanguage\Error When API request fails, invalid response received, or authentication fails
      */
     public static function detect($text)
     {
@@ -71,7 +73,8 @@ class DetectLanguage
      *
      * @static
      * @param string $text The text for language detection
-     * @return string|null detected language code
+     * @return string|null Detected language code
+     * @throws \DetectLanguage\Error When API request fails, invalid response received, or authentication fails
      */
     public static function detectCode($text)
     {
@@ -88,7 +91,8 @@ class DetectLanguage
      *
      * @static
      * @param array $texts The texts for language detection
-     * @return array detected languages information
+     * @return array Detected languages information
+     * @throws \DetectLanguage\Error When API request fails, invalid response received, or authentication fails
      */
     public static function detectBatch($texts)
     {
@@ -100,6 +104,7 @@ class DetectLanguage
      *
      * @static
      * @return array account status information
+     * @throws \DetectLanguage\Error When API request fails, invalid response received, or authentication fails
      */
     public static function getStatus()
     {
@@ -110,7 +115,8 @@ class DetectLanguage
      * Get supported languages.
      *
      * @static
-     * @return array languages information
+     * @return array Supported languages information
+     * @throws \DetectLanguage\Error When API request fails, invalid response received, or authentication fails
      */
     public static function getLanguages()
     {
@@ -122,7 +128,8 @@ class DetectLanguage
     /**
      * @deprecated use self::detectCode instead
      * @param string $text The text for language detection
-     * @return string|null detected language code
+     * @return string|null Detected language code
+     * @throws \DetectLanguage\Error When API request fails, invalid response received, or authentication fails
      */
     public static function simpleDetect($text)
     {

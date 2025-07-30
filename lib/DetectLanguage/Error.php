@@ -2,7 +2,9 @@
 
 namespace DetectLanguage;
 
-// backwards compatibility
+/**
+ * @deprecated Use Error class instead
+ */
 class DetectLanguageError extends \Exception
 {
 }
