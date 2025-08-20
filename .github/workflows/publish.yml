@@ -8,6 +8,6 @@ jobs:
     steps:
       - name: Dispatch packagist update
         run: |
-          curl -X POST -d '{"repository":{"url":"https://github.com/detectlanguage/detectlanguage-php"}}' \
-            -H "Content-Type: application/json" \
-            https://packagist.org/api/update-package?username=${{ secrets.PACKAGIST_USERNAME }}&apiToken=${{ secrets.PACKAGIST_API_TOKEN }}
+          curl -X POST -H 'Content-Type: application/json' \
+            -d '{"repository":"https://github.com/detectlanguage/detectlanguage-php"}' \
+            'https://packagist.org/api/update-package?username=${{ secrets.PACKAGIST_USERNAME }}&apiToken=${{ secrets.PACKAGIST_API_TOKEN }}'
