@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Dispatch packagist update
-        run: |
-          curl -X POST https://packagist.org/api/update-package?username=${{ secrets.PACKAGIST_USERNAME }}&apiToken=${{ secrets.PACKAGIST_API_TOKEN }} \
-            -d '{"repository":{"url":"https://github.com/detectlanguage/detectlanguage-php"}}' \
+        run: >-
+          curl -X POST https://packagist.org/api/update-package?username=${{ secrets.PACKAGIST_USERNAME }}&apiToken=${{ secrets.PACKAGIST_API_TOKEN }}
+            -d '{"repository":{"url":"https://github.com/detectlanguage/detectlanguage-php"}}'
             -H "Content-Type: application/json"
