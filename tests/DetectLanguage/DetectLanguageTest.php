@@ -12,7 +12,6 @@ class DetectLanguageTest extends TestCase
         parent::set_up();
 
         DetectLanguage::$apiKey = getenv('DETECTLANGUAGE_API_KEY');
-        DetectLanguage::$apiVersion = '0.2';
     }
 
     public function testConstructor()
@@ -24,7 +23,7 @@ class DetectLanguageTest extends TestCase
             'Expect the API key to be set.');
     }
 
-    public function testDetection()
+    public function testDetect()
     {
         $result = DetectLanguage::detect('Hello world');
 
@@ -37,10 +36,25 @@ class DetectLanguageTest extends TestCase
             'To detect Lithuanian language.');
     }
 
-    public function testSimpleDetection()
+    public function testDetectWithArray()
+    {
+        $result = DetectLanguage::detect(array('Hello world'));
+
+        $this->assertEquals('en', $result[0][0]->language,
+            'To detect English language.');
+    }
+
+    public function testDetectCode()
+    {
+        $result = DetectLanguage::detectCode('Hello world');
+
+        $this->assertEquals('en', $result,
+            'To detect English language.');
+    }
+
+    public function testSimpleDetect()
     {
         $result = DetectLanguage::simpleDetect('Hello world');
-
         $this->assertEquals('en', $result,
             'To detect English language.');
     }
@@ -57,20 +71,13 @@ class DetectLanguageTest extends TestCase
         $this->__request();
     }
 
-    public function testSecureRequest()
-    {
-        DetectLanguage::setSecure(true);
-        $this->__request();
-        DetectLanguage::setSecure(false);
-    }
-
     public function testInvalidApiKey()
     {
         $this->expectException('\DetectLanguage\Error');
 
         DetectLanguage::setApiKey('invalid');
 
-        $result = DetectLanguage::simpleDetect('Hello world');
+        $result = DetectLanguage::detectCode('Hello world');
     }
 
     public function testErrorBackwardsCompatibility()
@@ -79,15 +86,14 @@ class DetectLanguageTest extends TestCase
 
         DetectLanguage::setApiKey('invalid');
 
-        $result = DetectLanguage::simpleDetect('Hello world');
+        $result = DetectLanguage::detectCode('Hello world');
     }
 
     public function testInvalidResponse()
     {
         $this->expectException('\DetectLanguage\Error');
 
-        DetectLanguage::$apiVersion = '0.0';
-        DetectLanguage::simpleDetect('Hello world');
+        DetectLanguage::detect('');
     }
 
     public function testBatchDetectionWithCurl()
@@ -120,6 +126,13 @@ class DetectLanguageTest extends TestCase
         $this->assertEquals($response->status, 'ACTIVE');
     }
 
+    public function testGetLanguages()
+    {
+        $response = DetectLanguage::getLanguages();
+        $this->assertIsArray($response);
+        $this->assertIsString($response[0]->code);
+    }
+
     private function setRequestEngine($engine)
     {
         \DetectLanguage\Client::$requestEngine = $engine;
@@ -127,14 +140,14 @@ class DetectLanguageTest extends TestCase
 
     private function __request()
     {
-        $result = DetectLanguage::simpleDetect('Hello world');
+        $result = DetectLanguage::detectCode('Hello world');
 
         $this->assertEquals('en', $result, 'To detect English language.');
     }
 
     private function __batchDetection()
     {
-        $result = DetectLanguage::detect(array('Hello world', 'Jau saulelė vėl atkopdama budino svietą'));
+        $result = DetectLanguage::detectBatch(array('Hello world', 'Jau saulelė vėl atkopdama budino svietą'));
 
         $this->assertEquals('en', $result[0][0]->language,
             'To detect English language.');
@@ -170,7 +183,7 @@ class DetectLanguageTest extends TestCase
             'hello',
         );
 
-        $result = DetectLanguage::detect($request);
+        $result = DetectLanguage::detectBatch($request);
 
         foreach ($request as $i => $phrase) {
             $language = $phrase == 'hello' ? 'en' : 'ru';

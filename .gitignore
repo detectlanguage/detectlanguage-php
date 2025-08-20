@@ -1,3 +1,4 @@
+.env.local
 .DS_Store
 .AppleDouble
 .LSOverride
@@ -6,6 +7,7 @@ Icon
 .Spotlight-V100
 .Trashes
 *.sublime-*
+.phpunit.result.cache
 vendor
 composer.lock
 bin

@@ -31,26 +31,19 @@ class DetectLanguage
      * @static
      * @var string
      */
-    public static $apiVersion = '0.2';
-
-    /**
-     * Enable secure mode (SSL).
-     *
-     * @static
-     * @var boolean
-     */
-    public static $secure;
+    public static $apiVersion = 'v3';
 
     /**
      * API Client Version.
      */
-    const VERSION = '2.2.1';
+    const VERSION = '3.0.0';
 
     /**
      * Set API key
      *
      * @static
-     * @param string $apiKey
+     * @param string $apiKey The API key for authentication
+     * @return void
      */
     public static function setApiKey($apiKey)
     {
@@ -58,28 +51,21 @@ class DetectLanguage
     }
 
     /**
-     * Set secure mode
-     *
-     * @static
-     * @param boolean $secure
-     */
-    public static function setSecure($secure)
-    {
-        self::$secure = $secure;
-    }
-
-    /**
      * Detect text language.
      *
      * @static
      * @param string $text The text for language detection
-     * @return array detected languages information
+     * @return array Detected languages information
+     * @throws \DetectLanguage\Error When API request fails, invalid response received, or authentication fails
      */
     public static function detect($text)
     {
-        $result = Client::request('detect', array('q' => $text));
+        if (is_array($text)) {
+            trigger_error('detect method does not accept arrays, use detectBatch instead', E_USER_DEPRECATED);
+            return self::detectBatch($text);
+        }
 
-        return $result->data->detections;
+        return Client::request('POST', 'detect', array('q' => $text));
     }
 
     /**
@@ -87,9 +73,10 @@ class DetectLanguage
      *
      * @static
      * @param string $text The text for language detection
-     * @return string|null detected language code
+     * @return string|null Detected language code
+     * @throws \DetectLanguage\Error When API request fails, invalid response received, or authentication fails
      */
-    public static function simpleDetect($text)
+    public static function detectCode($text)
     {
         $detections = self::detect($text);
 
@@ -99,8 +86,54 @@ class DetectLanguage
             return null;
     }
 
+    /**
+     * Detect text language in batch.
+     *
+     * @static
+     * @param array $texts The texts for language detection
+     * @return array Detected languages information
+     * @throws \DetectLanguage\Error When API request fails, invalid response received, or authentication fails
+     */
+    public static function detectBatch($texts)
+    {
+        return Client::request('POST', 'detect-batch', array('q' => $texts));
+    }
+
+    /**
+     * Get account status.
+     *
+     * @static
+     * @return array account status information
+     * @throws \DetectLanguage\Error When API request fails, invalid response received, or authentication fails
+     */
     public static function getStatus()
     {
-        return Client::request('user/status');
+        return Client::request('GET', 'account/status');
+    }
+
+    /**
+     * Get supported languages.
+     *
+     * @static
+     * @return array Supported languages information
+     * @throws \DetectLanguage\Error When API request fails, invalid response received, or authentication fails
+     */
+    public static function getLanguages()
+    {
+        return Client::request('GET', 'languages');
+    }
+
+    // DEPRECATED METHODS
+
+    /**
+     * @deprecated use self::detectCode instead
+     * @param string $text The text for language detection
+     * @return string|null Detected language code
+     * @throws \DetectLanguage\Error When API request fails, invalid response received, or authentication fails
+     */
+    public static function simpleDetect($text)
+    {
+        trigger_error('simpleDetect method is deprecated, use detectCode instead', E_USER_DEPRECATED);
+        return self::detectCode($text);
     }
 }

@@ -28,20 +28,27 @@ class Client
     /**
      * Perform a request
      *
-     * @param string $method Method name
-     * @param array $params The parameters to use for the POST body
+     * @param string $method HTTP method name (GET, POST, etc.)
+     * @param string $path API endpoint path
+     * @param array|null $payload Request payload data
      *
-     * @return object
+     * @return array Response data
+     * @throws \DetectLanguage\Error When API request fails, invalid response received, or authentication fails
      */
-    public static function request($method, $params = null)
+    public static function request($method, $path, $payload = null)
     {
-        $url = self::getUrl($method);
+        $url = self::getUrl($path);
 
-        $request_method = self::getRequestMethodName();
-        $response_body = self::$request_method($url, $params);
+        if ($payload !== null)
+            $body = json_encode($payload);
+        else
+            $body = null;
+
+        $engine_method = self::getEngineMethodName();
+        $response_body = self::$engine_method($method,$url, $body);
         $response = json_decode($response_body);
 
-        if (!is_object($response))
+        if (!is_object($response) && !is_array($response))
             throw new Error("Invalid server response: $response_body");
 
         if (isset($response->error))
@@ -50,12 +57,7 @@ class Client
         return $response;
     }
 
-    /**
-     * Get request method name.
-     *
-     * @return string
-     */
-    protected static function getRequestMethodName()
+    protected static function getEngineMethodName()
     {
         $request_engine = self::$requestEngine;
 
@@ -79,22 +81,26 @@ class Client
     /**
      * Perform request using native PHP streams
      *
+     * @param string $method HTTP method name
      * @param string $url Request URL
-     * @param array $params The parameters to use for the POST body
+     * @param string|null $body Request body
      *
      * @return string Response body
      */
-    protected static function requestStream($url, $params)
+    protected static function requestStream($method, $url, $body)
     {
         $opts = array('http' =>
             array(
-                'method' => 'POST',
+                'method' => $method,
                 'header' => implode("\n", self::getHeaders()),
-                'content' => json_encode($params),
                 'timeout' => self::$requestTimeout,
                 'ignore_errors' => true,
             )
         );
+
+        if ($body !== null) {
+            $opts['http']['content'] = $body;
+        }
 
         $context = stream_context_create($opts);
 
@@ -104,24 +110,30 @@ class Client
     /**
      * Perform request using CURL extension.
      *
+     * @param string $method HTTP method name
      * @param string $url Request URL
-     * @param array $params The parameters to use for the POST body
+     * @param string|null $body Request body
      *
      * @return string Response body
+     * @throws \DetectLanguage\Error When CURL request fails, times out, or connection fails
      */
-    protected static function requestCurl($url, $params)
+    protected static function requestCurl($method, $url, $body)
     {
         $ch = curl_init();
 
         $options = array(
+            CURLOPT_CUSTOMREQUEST => $method,
             CURLOPT_URL => $url,
             CURLOPT_HTTPHEADER => self::getHeaders(),
-            CURLOPT_POSTFIELDS => json_encode($params),
             CURLOPT_CONNECTTIMEOUT => self::$connectTimeout,
             CURLOPT_TIMEOUT => self::$requestTimeout,
             CURLOPT_USERAGENT => self::getUserAgent(),
             CURLOPT_RETURNTRANSFER => true
         );
+
+        if ($body !== null) {
+            $options[CURLOPT_POSTFIELDS] = $body;
+        }
 
         curl_setopt_array($ch, $options);
 
@@ -142,27 +154,17 @@ class Client
      * Build URL for given method
      *
      * @param string $method Method name
-     * @return string
+     * @return string Complete API URL
      */
     protected static function getUrl($method)
     {
-        return self::getProtocol() . '://' . DetectLanguage::$host . '/' . DetectLanguage::$apiVersion . '/' . $method;
-    }
-
-    /**
-     * Get protocol for request.
-     *
-     * @return string 'https' or 'http'
-     */
-    protected static function getProtocol()
-    {
-        return DetectLanguage::$secure ? 'https' : 'http';
+        return 'https://' . DetectLanguage::$host . '/' . DetectLanguage::$apiVersion . '/' . $method;
     }
 
     /**
      * Build request headers.
      *
-     * @return array
+     * @return array Array of HTTP headers
      */
     protected static function getHeaders()
     {
@@ -177,7 +179,7 @@ class Client
     /**
      * Get User-Agent for the request.
      *
-     * @return string
+     * @return string User-Agent string
      */
     protected static function getUserAgent()
     {

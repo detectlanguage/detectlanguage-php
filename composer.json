@@ -24,5 +24,9 @@
         "psr-0": {
             "DetectLanguage": "lib/"
         }
+    },
+    "scripts": {
+        "test": "php -d memory_limit=512M vendor/phpunit/phpunit/phpunit",
+        "test-silent": "php -d memory_limit=512M -d error_reporting='E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED' vendor/phpunit/phpunit/phpunit"
     }
 }
